@@ -17,7 +17,6 @@ public class TimeConversionRepository {
         LocalDateTime gmtDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("GMT"));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
         Map<String, String> result = new HashMap<>();
         result.put("local_time", localDateTime.format(formatter));
         result.put("gmt_time", gmtDateTime.format(formatter));
