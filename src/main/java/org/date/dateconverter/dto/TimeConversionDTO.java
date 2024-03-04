@@ -1,7 +1,6 @@
 package org.date.dateconverter.dto;
 
 public class TimeConversionDTO {
-
     private String localTime;
     private String gmtTime;
 

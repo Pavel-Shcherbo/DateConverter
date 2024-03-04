@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" value="66840b7c-93e9-4c11-a051-f162cd3f6713" />
+        </datasource-mapping>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
+  </component>
   <component name="SonarLintModuleSettings">
-    <option name="uniqueId" value="d679ffc6-e73e-4fcc-9fb3-dfd556b288ae" />
+    <option name="uniqueId" value="0b54061b-1220-4034-ba01-dbeb3f144996" />
   </component>
 </module>
