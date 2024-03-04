@@ -21,6 +21,10 @@ public class TimeConversionService {
     private final ConversionRepository conversionRepository;
     private final TimeEntryService timeEntryService;
 
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String LOCAL_TIME_KEY = "local_time";
+    private static final String GMT_TIME_KEY = "gmt_time";
+
     @Autowired
     public TimeConversionService(ConversionRepository conversionRepository,
                                  TimeEntryService timeEntryService) {
@@ -32,7 +36,6 @@ public class TimeConversionService {
     public TimeConversionDTO convertTime(long milliseconds) {
         Map<String, String> result = convertTimeToString(milliseconds);
         Conversion conversion = saveConversionResult(milliseconds, result);
-        System.out.println("Conversion saved with ID: " + conversion.getId());
         return new TimeConversionDTO(conversion.getTimeInCurrentTimeZone(), conversion.getTimeInGMT());
     }
 
@@ -41,18 +44,19 @@ public class TimeConversionService {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDateTime gmtDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("GMT"));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
         return Map.of(
-                "local_time", localDateTime.format(formatter),
-                "gmt_time", gmtDateTime.format(formatter)
+                LOCAL_TIME_KEY, localDateTime.format(formatter),
+                GMT_TIME_KEY, gmtDateTime.format(formatter)
         );
     }
 
     private Conversion saveConversionResult(long milliseconds, Map<String, String> result) {
         TimeEntry timeEntry = timeEntryService.createTimeEntry(milliseconds);
 
-        LocalDateTime localDateTime = LocalDateTime.parse(result.get("local_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        LocalDateTime gmtDateTime = LocalDateTime.parse(result.get("gmt_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+        LocalDateTime localDateTime = LocalDateTime.parse(result.get(LOCAL_TIME_KEY), formatter);
+        LocalDateTime gmtDateTime = LocalDateTime.parse(result.get(GMT_TIME_KEY), formatter);
 
         TimeData timeData = new TimeData();
         timeData.setLocalTime(localDateTime);
@@ -60,8 +64,8 @@ public class TimeConversionService {
 
         Conversion conversion = new Conversion();
         conversion.setTimeInMillis(milliseconds);
-        conversion.setTimeInCurrentTimeZone(result.get("local_time"));
-        conversion.setTimeInGMT(result.get("gmt_time"));
+        conversion.setTimeInCurrentTimeZone(result.get(LOCAL_TIME_KEY));
+        conversion.setTimeInGMT(result.get(GMT_TIME_KEY));
 
         conversion.addTimeData(timeData);
         conversion.addTimeEntry(timeEntry);

@@ -25,7 +25,6 @@ public class TimeDataService {
 
         TimeEntry timeEntry = new TimeEntry();
         timeEntry.setId(timeEntryId);
-        timeData.setTimeEntry(timeEntry);
 
         return timeDataRepository.save(timeData);
     }

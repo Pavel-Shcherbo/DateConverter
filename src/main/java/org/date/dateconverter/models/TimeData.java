@@ -51,6 +51,6 @@ public class TimeData {
         this.conversion = conversion;
     }
 
-    public void setTimeEntry(TimeEntry timeEntry) {
-    }
+
+
 }
