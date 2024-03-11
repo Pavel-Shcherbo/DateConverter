@@ -2,7 +2,6 @@ package org.date.dateconverter.service;
 
 import org.date.dateconverter.dto.TimeConversionDTO;
 import org.date.dateconverter.models.Conversion;
-import org.date.dateconverter.models.TimeData;
 import org.date.dateconverter.models.TimeEntry;
 import org.date.dateconverter.repository.ConversionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,16 +57,11 @@ public class TimeConversionService {
         LocalDateTime localDateTime = LocalDateTime.parse(result.get(LOCAL_TIME_KEY), formatter);
         LocalDateTime gmtDateTime = LocalDateTime.parse(result.get(GMT_TIME_KEY), formatter);
 
-        TimeData timeData = new TimeData();
-        timeData.setLocalTime(localDateTime);
-        timeData.setGmtTime(gmtDateTime);
 
         Conversion conversion = new Conversion();
-        conversion.setTimeInMillis(milliseconds);
         conversion.setTimeInCurrentTimeZone(result.get(LOCAL_TIME_KEY));
         conversion.setTimeInGMT(result.get(GMT_TIME_KEY));
 
-        conversion.addTimeData(timeData);
         conversion.addTimeEntry(timeEntry);
 
         return conversionRepository.save(conversion);

@@ -3,7 +3,6 @@ package org.date.dateconverter.controller;
 import org.date.dateconverter.models.Conversion;
 import org.date.dateconverter.models.TimeEntry;
 import org.date.dateconverter.service.ConversionService;
-import org.date.dateconverter.service.TimeDataService;
 import org.date.dateconverter.service.TimeEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +18,11 @@ public class MyController {
 
     private final ConversionService conversionService;
     private final TimeEntryService timeEntryService;
-    private final TimeDataService timeDataService;
 
     @Autowired
-    public MyController(ConversionService conversionService, TimeEntryService timeEntryService, TimeDataService timeDataService) {
+    public MyController(ConversionService conversionService, TimeEntryService timeEntryService) {
         this.conversionService = conversionService;
         this.timeEntryService = timeEntryService;
-        this.timeDataService = timeDataService;
     }
 
     // Endpoint для создания Conversion
@@ -93,6 +90,4 @@ public class MyController {
         timeEntryService.deleteTimeEntryById(id);
         return ResponseEntity.ok().build();
     }
-
-
 }
