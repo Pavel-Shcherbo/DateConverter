@@ -35,7 +35,7 @@ public class TimeConversionService {
     @Transactional
     public TimeConversionDTO convertTime(long milliseconds, TimeEntry timeEntry, TimeZones timeZone) {
         Map<String, String> result = convertTimeToString(milliseconds);
-        Conversion conversion = saveConversionResult(milliseconds, result, timeEntry, timeZone);
+        Conversion conversion = saveConversionResult(result, timeEntry, timeZone);
         return new TimeConversionDTO(conversion.getTimeInCurrentTimeZone(), conversion.getTimeInGMT());
     }
 
@@ -51,10 +51,8 @@ public class TimeConversionService {
         );
     }
 
-    private Conversion saveConversionResult(long milliseconds, Map<String, String> result, TimeEntry timeEntry, TimeZones timeZone) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
-        LocalDateTime localDateTime = LocalDateTime.parse(result.get(LOCAL_TIME_KEY), formatter);
-        LocalDateTime gmtDateTime = LocalDateTime.parse(result.get(GMT_TIME_KEY), formatter);
+    private Conversion saveConversionResult(Map<String, String> result, TimeEntry timeEntry, TimeZones timeZone) {
+        
 
         Conversion conversion = new Conversion();
         conversion.setTimeInCurrentTimeZone(result.get(LOCAL_TIME_KEY));
