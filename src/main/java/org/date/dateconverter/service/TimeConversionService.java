@@ -52,7 +52,7 @@ public class TimeConversionService {
     }
 
     private Conversion saveConversionResult(Map<String, String> result, TimeEntry timeEntry, TimeZones timeZone) {
-        
+
 
         Conversion conversion = new Conversion();
         conversion.setTimeInCurrentTimeZone(result.get(LOCAL_TIME_KEY));
