@@ -16,27 +16,34 @@ public class ConversionService {
     private final ConversionRepository conversionRepository;
     private final TimeZonesRepository timeZonesRepository;
 
-
     @Autowired
     public ConversionService(ConversionRepository conversionRepository, TimeZonesRepository timeZonesRepository) {
         this.conversionRepository = conversionRepository;
         this.timeZonesRepository = timeZonesRepository;
     }
-    public Conversion createConversion(Conversion conversion, Long timeZoneId) {
-        TimeZones timeZone = timeZonesRepository.findById(timeZoneId).orElseThrow(() -> new IllegalArgumentException("Invalid time zone Id"));
-        conversion.setTimeZone(timeZone);
+
+    public Conversion createConversion(Conversion conversion) {
         return conversionRepository.save(conversion);
     }
+
+    public Conversion createConversion(Conversion conversion, String timeZone) {
+        TimeZones existingTimeZone = timeZonesRepository.findByTimeZone(timeZone);
+        if (existingTimeZone == null) {
+            existingTimeZone = new TimeZones();
+            existingTimeZone.setTimeZone(timeZone);
+            existingTimeZone = timeZonesRepository.save(existingTimeZone);
+        }
+        conversion.setTimeZone(existingTimeZone); // Установка связи между Conversion и TimeZones
+        return conversionRepository.save(conversion);
+    }
+
+
     public List<Conversion> getAllConversions() {
         return conversionRepository.findAll();
     }
 
     public Optional<Conversion> getConversionById(Long id) {
         return conversionRepository.findById(id);
-    }
-
-    public Conversion createConversion(Conversion conversion) {
-        return conversionRepository.save(conversion);
     }
 
     public void updateConversion(Conversion conversion) {

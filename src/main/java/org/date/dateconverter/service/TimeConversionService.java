@@ -3,6 +3,7 @@ package org.date.dateconverter.service;
 import org.date.dateconverter.dto.TimeConversionDTO;
 import org.date.dateconverter.models.Conversion;
 import org.date.dateconverter.models.TimeEntry;
+import org.date.dateconverter.models.TimeZones;
 import org.date.dateconverter.repository.ConversionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,9 @@ public class TimeConversionService {
     }
 
     @Transactional
-    public TimeConversionDTO convertTime(long milliseconds) {
+    public TimeConversionDTO convertTime(long milliseconds, TimeEntry timeEntry, TimeZones timeZone) {
         Map<String, String> result = convertTimeToString(milliseconds);
-        Conversion conversion = saveConversionResult(milliseconds, result);
+        Conversion conversion = saveConversionResult(milliseconds, result, timeEntry, timeZone);
         return new TimeConversionDTO(conversion.getTimeInCurrentTimeZone(), conversion.getTimeInGMT());
     }
 
@@ -50,19 +51,20 @@ public class TimeConversionService {
         );
     }
 
-    private Conversion saveConversionResult(long milliseconds, Map<String, String> result) {
-        TimeEntry timeEntry = timeEntryService.createTimeEntry(milliseconds);
-
+    private Conversion saveConversionResult(long milliseconds, Map<String, String> result, TimeEntry timeEntry, TimeZones timeZone) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
         LocalDateTime localDateTime = LocalDateTime.parse(result.get(LOCAL_TIME_KEY), formatter);
         LocalDateTime gmtDateTime = LocalDateTime.parse(result.get(GMT_TIME_KEY), formatter);
-
 
         Conversion conversion = new Conversion();
         conversion.setTimeInCurrentTimeZone(result.get(LOCAL_TIME_KEY));
         conversion.setTimeInGMT(result.get(GMT_TIME_KEY));
 
+        // Связываем результат конверсии с TimeEntry
         conversion.addTimeEntry(timeEntry);
+
+        // Устанавливаем связь с TimeZones
+        conversion.setTimeZone(timeZone);
 
         return conversionRepository.save(conversion);
     }

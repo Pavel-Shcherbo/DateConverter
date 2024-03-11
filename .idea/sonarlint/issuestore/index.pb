@@ -44,3 +44,5 @@ j
 :src/main/java/org/date/dateconverter/models/TimeZones.java,b/3/b30c9c2464fd4326e63039ddc55454941f867fdb
 x
 Hsrc/main/java/org/date/dateconverter/repository/TimeZonesRepository.java,e/7/e79bf696c82414228590e20065ae85d5e2111525
+r
+Bsrc/main/java/org/date/dateconverter/models/ConversionRequest.java,c/c/ccccc1bf4987ec7c08dc5e69bb350ae971f41f35

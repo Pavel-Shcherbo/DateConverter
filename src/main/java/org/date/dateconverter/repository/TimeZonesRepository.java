@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TimeZonesRepository extends JpaRepository<TimeZones, Long> {
+    TimeZones findByTimeZone(String timeZone);
 }
