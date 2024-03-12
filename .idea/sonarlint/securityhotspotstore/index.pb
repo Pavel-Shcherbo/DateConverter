@@ -22,14 +22,8 @@ y
 Isrc/main/java/org/date/dateconverter/repository/ConversionRepository.java,4/2/4288a0557b55677af1918db4596a25df419087be
 j
 :src/main/java/org/date/dateconverter/models/TimeEntry.java,9/9/993af48b6474450c30222c8878ff3e892579d681
-i
-9src/main/java/org/date/dateconverter/models/TimeData.java,e/1/e12433a20c6eef20093cda54035a7273c5709a9c
 x
 Hsrc/main/java/org/date/dateconverter/repository/TimeEntryRepository.java,0/d/0d2c4441573066c9bf1b2719f43f681f11dc28b1
-w
-Gsrc/main/java/org/date/dateconverter/repository/TimeDataRepository.java,a/5/a58a20049797fb3b9d5bb296f0f29ae1927aeac4
-q
-Asrc/main/java/org/date/dateconverter/service/TimeDataService.java,6/6/666212ae92d9b24b59a4357bfdc52b57c463e4d1
 r
 Bsrc/main/java/org/date/dateconverter/service/TimeEntryService.java,a/a/aa5748aedde02105f917f76bf5182ac255e1f66d
 q
@@ -38,11 +32,9 @@ s
 Csrc/main/java/org/date/dateconverter/service/ConversionService.java,7/c/7cdfc7b9b818c434ccab337fcbf2744b123f0458
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-i
-9src/main/java/org/date/dateconverter/models/TimeZone.java,2/f/2f11a93266caf93aee99cbfce1a189b0d5882c04
 j
 :src/main/java/org/date/dateconverter/models/TimeZones.java,b/3/b30c9c2464fd4326e63039ddc55454941f867fdb
 x
 Hsrc/main/java/org/date/dateconverter/repository/TimeZonesRepository.java,e/7/e79bf696c82414228590e20065ae85d5e2111525
 r
-Bsrc/main/java/org/date/dateconverter/models/ConversionRequest.java,c/c/ccccc1bf4987ec7c08dc5e69bb350ae971f41f35
+Bsrc/main/java/org/date/dateconverter/service/TimeZonesService.java,f/f/fff6bf804ee56bb7d7fd9e3c976dd2e84b60d076

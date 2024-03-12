@@ -36,7 +36,20 @@ public class TimeEntryService {
         timeEntryRepository.save(timeEntry);
     }
 
+    public void updateTimeEntryById(Long id, long milliseconds) {
+        Optional<TimeEntry> optionalTimeEntry = timeEntryRepository.findById(id);
+        if (optionalTimeEntry.isPresent()) {
+            TimeEntry timeEntry = optionalTimeEntry.get();
+            timeEntry.setMilliseconds(milliseconds);
+            timeEntryRepository.save(timeEntry);
+        }
+    }
+
     public void deleteTimeEntryById(Long id) {
         timeEntryRepository.deleteById(id);
+    }
+
+    public void deleteAllTimeEntries() {
+        timeEntryRepository.deleteAll();
     }
 }

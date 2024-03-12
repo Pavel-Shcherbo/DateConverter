@@ -13,7 +13,7 @@ public class TimeEntry {
     private Long id;
     private long milliseconds;
 
-    @ManyToMany(mappedBy = "timeEntries")
+    @ManyToMany(mappedBy = "timeEntries", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Conversion> conversions = new HashSet<>();
 

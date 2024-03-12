@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class TimeConversionService {
@@ -65,5 +66,37 @@ public class TimeConversionService {
         conversion.setTimeZone(timeZone);
 
         return conversionRepository.save(conversion);
+    }
+
+    @Transactional(readOnly = true)
+    public TimeConversionDTO getTimeConversionById(Long id) {
+        Optional<Conversion> optionalConversion = conversionRepository.findById(id);
+        if (optionalConversion.isPresent()) {
+            Conversion conversion = optionalConversion.get();
+            return new TimeConversionDTO(conversion.getTimeInCurrentTimeZone(), conversion.getTimeInGMT());
+        } else {
+            throw new RuntimeException("Conversion with id " + id + " not found");
+        }
+    }
+
+    @Transactional
+    public TimeConversionDTO updateTimeConversion(Long id, long milliseconds, TimeEntry timeEntry, TimeZones timeZone) {
+        Optional<Conversion> optionalConversion = conversionRepository.findById(id);
+        if (optionalConversion.isPresent()) {
+            Map<String, String> result = convertTimeToString(milliseconds);
+            Conversion conversion = optionalConversion.get();
+            conversion.setTimeInCurrentTimeZone(result.get(LOCAL_TIME_KEY));
+            conversion.setTimeInGMT(result.get(GMT_TIME_KEY));
+            conversion.addTimeEntry(timeEntry);
+            conversion.setTimeZone(timeZone);
+            return new TimeConversionDTO(conversion.getTimeInCurrentTimeZone(), conversion.getTimeInGMT());
+        } else {
+            throw new RuntimeException("Conversion with id " + id + " not found");
+        }
+    }
+
+    @Transactional
+    public void deleteTimeConversion(Long id) {
+        conversionRepository.deleteById(id);
     }
 }

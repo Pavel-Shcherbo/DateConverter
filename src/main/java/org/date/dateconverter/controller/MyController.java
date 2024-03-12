@@ -2,8 +2,10 @@ package org.date.dateconverter.controller;
 
 import org.date.dateconverter.models.Conversion;
 import org.date.dateconverter.models.TimeEntry;
+import org.date.dateconverter.models.TimeZones;
 import org.date.dateconverter.service.ConversionService;
 import org.date.dateconverter.service.TimeEntryService;
+import org.date.dateconverter.service.TimeZonesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,15 @@ public class MyController {
 
     private final ConversionService conversionService;
     private final TimeEntryService timeEntryService;
+    private final TimeZonesService timeZonesService;
+
 
     @Autowired
-    public MyController(ConversionService conversionService, TimeEntryService timeEntryService) {
+    public MyController(ConversionService conversionService, TimeEntryService timeEntryService, TimeZonesService timeZonesService) {
         this.conversionService = conversionService;
         this.timeEntryService = timeEntryService;
+        this.timeZonesService = timeZonesService;
+
     }
 
     // Endpoint для создания Conversion
@@ -90,4 +96,41 @@ public class MyController {
         timeEntryService.deleteTimeEntryById(id);
         return ResponseEntity.ok().build();
     }
+
+    // Эндпоинт для создания TimeZone
+    @PostMapping("/timeZones")
+    public ResponseEntity<TimeZones> createTimeZone(@RequestBody TimeZones timeZone) {
+        TimeZones createdTimeZone = timeZonesService.createTimeZone(timeZone);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTimeZone);
+    }
+
+    // Эндпоинт для получения всех TimeZones
+    @GetMapping("/timeZones")
+    public ResponseEntity<List<TimeZones>> getAllTimeZones() {
+        List<TimeZones> timeZones = timeZonesService.getAllTimeZones();
+        return ResponseEntity.ok().body(timeZones);
+    }
+
+    // Эндпоинт для получения TimeZone по ID
+    @GetMapping("/timeZones/{id}")
+    public ResponseEntity<TimeZones> getTimeZoneById(@PathVariable Long id) {
+        Optional<TimeZones> timeZone = timeZonesService.getTimeZoneById(id);
+        return timeZone.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Эндпоинт для обновления TimeZone
+    @PutMapping("/timeZones/{id}")
+    public ResponseEntity<Void> updateTimeZone(@PathVariable Long id, @RequestBody TimeZones timeZone) {
+        timeZone.setId(id); // Устанавливаем ID для обновления
+        timeZonesService.updateTimeZone(timeZone);
+        return ResponseEntity.ok().build();
+    }
+
+    // Эндпоинт для удаления TimeZone по ID
+    @DeleteMapping("/timeZones/{id}")
+    public ResponseEntity<Void> deleteTimeZoneById(@PathVariable Long id) {
+        timeZonesService.deleteTimeZoneById(id);
+        return ResponseEntity.ok().build();
+    }
 }
+

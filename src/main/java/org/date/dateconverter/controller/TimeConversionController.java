@@ -31,10 +31,8 @@ public class TimeConversionController {
         // Создание объекта TimeEntry
         TimeEntry timeEntry = timeEntryService.createTimeEntry(milliseconds);
 
-        // Получение текущего часового пояса в момент запроса
         String timeZone = getTimeZone();
 
-        // Создание объекта TimeZones или получение существующего по часовому поясу
         TimeZones existingTimeZone = timeZonesRepository.findByTimeZone(timeZone);
         if (existingTimeZone == null) {
             existingTimeZone = new TimeZones();
@@ -42,7 +40,6 @@ public class TimeConversionController {
             existingTimeZone = timeZonesRepository.save(existingTimeZone);
         }
 
-        // Вызов сервиса для конвертации времени
         TimeConversionDTO result = timeConversionService.convertTime(milliseconds, timeEntry, existingTimeZone);
 
         return ResponseEntity.ok().body(result);
