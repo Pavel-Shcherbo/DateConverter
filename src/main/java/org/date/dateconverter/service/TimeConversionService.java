@@ -75,7 +75,7 @@ public class TimeConversionService {
             Conversion conversion = optionalConversion.get();
             return new TimeConversionDTO(conversion.getTimeInCurrentTimeZone(), conversion.getTimeInGMT());
         } else {
-            throw new RuntimeException("Conversion with id " + id + " not found");
+            return new TimeConversionDTO(null, null);
         }
     }
 
@@ -91,7 +91,7 @@ public class TimeConversionService {
             conversion.setTimeZone(timeZone);
             return new TimeConversionDTO(conversion.getTimeInCurrentTimeZone(), conversion.getTimeInGMT());
         } else {
-            throw new RuntimeException("Conversion with id " + id + " not found");
+            return new TimeConversionDTO(null, null);
         }
     }
 
