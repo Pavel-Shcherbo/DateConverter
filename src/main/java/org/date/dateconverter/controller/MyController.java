@@ -132,5 +132,20 @@ public class MyController {
         timeZonesService.deleteTimeZoneById(id);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/useful")
+    public ResponseEntity<List<Conversion>> getUsefulData(
+            @RequestParam(name = "timeZoneId") Long timeZoneId,
+            @RequestParam(name = "timeEntryId") Long timeEntryId) {
+
+        // Вызываем метод сервиса, который выполняет кастомный запрос
+        List<Conversion> usefulData = conversionService.getUsefulData(timeZoneId, timeEntryId);
+
+        // Проверяем результат и возвращаем соответствующий ResponseEntity
+        if (usefulData != null && !usefulData.isEmpty()) {
+            return ResponseEntity.ok(usefulData);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 

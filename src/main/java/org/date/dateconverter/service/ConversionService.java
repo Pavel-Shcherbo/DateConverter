@@ -1,5 +1,7 @@
 package org.date.dateconverter.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.date.dateconverter.models.Conversion;
 import org.date.dateconverter.models.TimeZones;
 import org.date.dateconverter.repository.ConversionRepository;
@@ -12,7 +14,8 @@ import java.util.Optional;
 
 @Service
 public class ConversionService {
-
+    @PersistenceContext
+    private EntityManager entityManager;
     private final ConversionRepository conversionRepository;
     private final TimeZonesRepository timeZonesRepository;
 
@@ -52,5 +55,17 @@ public class ConversionService {
 
     public void deleteConversionById(Long id) {
         conversionRepository.deleteById(id);
+    }
+
+    public List<Conversion> getUsefulData(Long timeZoneId, Long timeEntryId) {
+        String queryString = "SELECT c FROM Conversion c " +
+                "JOIN c.timeZone tz " +
+                "JOIN c.timeEntries te " +
+                "WHERE tz.id = :timeZoneId " +
+                "AND te.id = :timeEntryId";
+        return entityManager.createQuery(queryString, Conversion.class)
+                .setParameter("timeZoneId", timeZoneId)
+                .setParameter("timeEntryId", timeEntryId)
+                .getResultList();
     }
 }

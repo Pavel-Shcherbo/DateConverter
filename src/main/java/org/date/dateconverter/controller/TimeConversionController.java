@@ -4,6 +4,7 @@ import org.date.dateconverter.dto.TimeConversionDTO;
 import org.date.dateconverter.models.TimeEntry;
 import org.date.dateconverter.models.TimeZones;
 import org.date.dateconverter.repository.TimeZonesRepository;
+import org.date.dateconverter.service.CacheService;
 import org.date.dateconverter.service.TimeConversionService;
 import org.date.dateconverter.service.TimeEntryService;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +19,24 @@ public class TimeConversionController {
 
     private final TimeConversionService timeConversionService;
     private final TimeEntryService timeEntryService;
-    private final TimeZonesRepository timeZonesRepository; // Добавляем репозиторий для доступа к таблице TimeZones
+    private final TimeZonesRepository timeZonesRepository;
+    private final CacheService cacheService;
 
-    public TimeConversionController(TimeConversionService timeConversionService, TimeEntryService timeEntryService, TimeZonesRepository timeZonesRepository) {
+    public TimeConversionController(TimeConversionService timeConversionService, TimeEntryService timeEntryService, TimeZonesRepository timeZonesRepository, CacheService cacheService) {
         this.timeConversionService = timeConversionService;
         this.timeEntryService = timeEntryService;
         this.timeZonesRepository = timeZonesRepository;
+        this.cacheService = cacheService;
     }
 
     @GetMapping("/convert")
     public ResponseEntity<TimeConversionDTO> convertTime(@RequestParam long milliseconds) {
-        // Создание объекта TimeEntry
+        String cacheKey = "conversion_" + milliseconds;
+        if (cacheService.containsKey(cacheKey)) {
+            TimeConversionDTO cachedResult = (TimeConversionDTO) cacheService.get(cacheKey);
+            return ResponseEntity.ok().body(cachedResult);
+        }
+
         TimeEntry timeEntry = timeEntryService.createTimeEntry(milliseconds);
 
         String timeZone = getTimeZone();
@@ -41,6 +49,8 @@ public class TimeConversionController {
         }
 
         TimeConversionDTO result = timeConversionService.convertTime(milliseconds, timeEntry, existingTimeZone);
+
+        cacheService.put(cacheKey, result);
 
         return ResponseEntity.ok().body(result);
     }
