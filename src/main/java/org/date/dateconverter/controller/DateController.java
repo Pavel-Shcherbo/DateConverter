@@ -16,15 +16,14 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class MyController {
+public class DateController {
 
     private final ConversionService conversionService;
     private final TimeEntryService timeEntryService;
     private final TimeZonesService timeZonesService;
 
-
     @Autowired
-    public MyController(ConversionService conversionService, TimeEntryService timeEntryService, TimeZonesService timeZonesService) {
+    public DateController(ConversionService conversionService, TimeEntryService timeEntryService, TimeZonesService timeZonesService) {
         this.conversionService = conversionService;
         this.timeEntryService = timeEntryService;
         this.timeZonesService = timeZonesService;
@@ -91,7 +90,7 @@ public class MyController {
     }
 
     // Endpoint для удаления TimeEntry по ID
-    @DeleteMapping( "/timeEntries/{id}")
+    @DeleteMapping("/timeEntries/{id}")
     public ResponseEntity<Void> deleteTimeEntryById(@PathVariable Long id) {
         timeEntryService.deleteTimeEntryById(id);
         return ResponseEntity.ok().build();
@@ -132,7 +131,9 @@ public class MyController {
         timeZonesService.deleteTimeZoneById(id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/useful")
+
+    @GetMapping("/TimeZoneIdAndTimeEntry")
+
     public ResponseEntity<List<Conversion>> getUsefulData(
             @RequestParam(name = "timeZoneId") Long timeZoneId,
             @RequestParam(name = "timeEntryId") Long timeEntryId) {

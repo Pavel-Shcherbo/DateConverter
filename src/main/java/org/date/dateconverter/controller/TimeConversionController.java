@@ -11,12 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.TimeZone;
 
 @RestController
 public class TimeConversionController {
-
     private final TimeConversionService timeConversionService;
     private final TimeEntryService timeEntryService;
     private final TimeZonesRepository timeZonesRepository;
@@ -30,10 +28,13 @@ public class TimeConversionController {
     }
 
     @GetMapping("/convert")
+
     public ResponseEntity<TimeConversionDTO> convertTime(@RequestParam long milliseconds) {
         String cacheKey = "conversion_" + milliseconds;
         if (cacheService.containsKey(cacheKey)) {
+
             TimeConversionDTO cachedResult = (TimeConversionDTO) cacheService.get(cacheKey);
+            System.out.println("data from cache" + cachedResult);
             return ResponseEntity.ok().body(cachedResult);
         }
 

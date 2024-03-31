@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
 public class Conversion {
     @Id
@@ -15,7 +14,7 @@ public class Conversion {
     private String timeInCurrentTimeZone;
     private String timeInGMT;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "time_zone_id")
     private TimeZones timeZone;
     @ManyToMany
@@ -30,6 +29,7 @@ public class Conversion {
     public void setTimeZone(TimeZones timeZone) {
         this.timeZone = timeZone;
     }
+
     public Long getId() {
         return id;
     }

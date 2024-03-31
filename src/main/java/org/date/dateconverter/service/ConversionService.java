@@ -40,7 +40,6 @@ public class ConversionService {
         return conversionRepository.save(conversion);
     }
 
-
     public List<Conversion> getAllConversions() {
         return conversionRepository.findAll();
     }
@@ -58,11 +57,11 @@ public class ConversionService {
     }
 
     public List<Conversion> getUsefulData(Long timeZoneId, Long timeEntryId) {
-        String queryString = "SELECT c FROM Conversion c " +
-                "JOIN c.timeZone tz " +
-                "JOIN c.timeEntries te " +
-                "WHERE tz.id = :timeZoneId " +
-                "AND te.id = :timeEntryId";
+        String queryString = "SELECT c FROM Conversion c "
+                + "JOIN c.timeZone tz "
+                + "JOIN c.timeEntries te "
+                + "WHERE tz.id = :timeZoneId "
+                + "AND te.id = :timeEntryId";
         return entityManager.createQuery(queryString, Conversion.class)
                 .setParameter("timeZoneId", timeZoneId)
                 .setParameter("timeEntryId", timeEntryId)
