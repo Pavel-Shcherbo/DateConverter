@@ -5,3 +5,6 @@ mvnw
 *.iml
 .DS_Store
 *.yaml
+*.log
+*.config
+*.xml
