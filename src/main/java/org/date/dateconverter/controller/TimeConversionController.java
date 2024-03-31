@@ -34,7 +34,6 @@ public class TimeConversionController {
         if (cacheService.containsKey(cacheKey)) {
 
             TimeConversionDTO cachedResult = (TimeConversionDTO) cacheService.get(cacheKey);
-            System.out.println("data from cache" + cachedResult);
             return ResponseEntity.ok().body(cachedResult);
         }
 
