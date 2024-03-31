@@ -6,5 +6,6 @@ mvnw
 .DS_Store
 *.yaml
 *.log
-*.config
-*.xml
+DS_Store
+lombok.config
+logfile.log
