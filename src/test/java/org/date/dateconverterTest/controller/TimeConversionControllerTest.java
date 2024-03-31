@@ -1,8 +1,7 @@
-package org.date.dateconverter.controller;
+package org.date.dateconverterTest.controller;
 
+import org.date.dateconverter.controller.TimeConversionController;
 import org.date.dateconverter.dto.TimeConversionDTO;
-import org.date.dateconverter.models.TimeEntry;
-import org.date.dateconverter.models.TimeZones;
 import org.date.dateconverter.repository.TimeZonesRepository;
 import org.date.dateconverter.service.CacheService;
 import org.date.dateconverter.service.TimeConversionService;
@@ -15,13 +14,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
 import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-public class TimeConversionControllerTest {
+class TimeConversionControllerTest {
 
     @Mock
     private TimeConversionService timeConversionService;
@@ -44,7 +42,7 @@ public class TimeConversionControllerTest {
     }
 
     @Test
-    public void testConvertTime_CacheHit() {
+    void testConvertTime_CacheHit() {
         // Arrange
         long milliseconds = 1000L;
         String cacheKey = "conversion_" + milliseconds;
@@ -63,7 +61,7 @@ public class TimeConversionControllerTest {
     // Add more tests to cover different scenarios for convertTime method
 
     @Test
-    public void testGetTimeZone() {
+    void testGetTimeZone() {
         // Arrange
         TimeZone.setDefault(TimeZone.getTimeZone("GMT+1"));
         String expectedTimeZone = "GMT+01:00";

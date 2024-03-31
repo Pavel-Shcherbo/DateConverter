@@ -1,5 +1,6 @@
-package org.date.dateconverter.controller;
+package org.date.dateconverterTest.controller;
 
+import org.date.dateconverter.controller.CacheController;
 import org.date.dateconverter.service.CacheService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class CacheControllerTest {
+class CacheControllerTest {
 
     @Mock
     private CacheService cacheService;
@@ -29,7 +30,7 @@ public class CacheControllerTest {
     }
 
     @Test
-    public void testGetCacheContent() {
+    void testGetCacheContent() {
         // Arrange
         Map<String, Object> expectedContent = new HashMap<>();
         expectedContent.put("key1", "value1");

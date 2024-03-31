@@ -56,7 +56,7 @@ public class TimeConversionController {
     }
 
     // Метод для получения текущего часового пояса в момент запроса
-    private String getTimeZone() {
+    public String getTimeZone() {
         TimeZone timeZone = TimeZone.getDefault();
         return timeZone.getID();
     }

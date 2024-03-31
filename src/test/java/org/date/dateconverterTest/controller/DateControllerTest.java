@@ -1,5 +1,6 @@
-package org.date.dateconverter.controller;
+package org.date.dateconverterTest.controller;
 
+import org.date.dateconverter.controller.DateController;
 import org.date.dateconverter.models.Conversion;
 import org.date.dateconverter.models.TimeEntry;
 import org.date.dateconverter.models.TimeZones;
@@ -16,12 +17,11 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-public class DateControllerTest {
+class DateControllerTest {
 
     @Mock
     private ConversionService conversionService;
@@ -41,7 +41,7 @@ public class DateControllerTest {
     }
 
     @Test
-    public void testCreateConversion() {
+    void testCreateConversion() {
         // Arrange
         Conversion conversion = new Conversion();
         when(conversionService.createConversion(conversion)).thenReturn(conversion);
@@ -55,7 +55,7 @@ public class DateControllerTest {
     }
 
     @Test
-    public void testGetAllConversions() {
+    void testGetAllConversions() {
         // Arrange
         List<Conversion> conversions = new ArrayList<>();
         when(conversionService.getAllConversions()).thenReturn(conversions);
@@ -71,7 +71,7 @@ public class DateControllerTest {
     // Add similar tests for other controller methods (getConversionById, updateConversion, deleteConversionById)
 
     @Test
-    public void testGetAllTimeEntries() {
+    void testGetAllTimeEntries() {
         // Arrange
         List<TimeEntry> timeEntries = new ArrayList<>();
         when(timeEntryService.getAllTimeEntries()).thenReturn(timeEntries);
@@ -87,7 +87,7 @@ public class DateControllerTest {
     // Add similar tests for other controller methods related to TimeEntry
 
     @Test
-    public void testCreateTimeZone() {
+    void testCreateTimeZone() {
         // Arrange
         TimeZones timeZone = new TimeZones();
         when(timeZonesService.createTimeZone(timeZone)).thenReturn(timeZone);
@@ -103,7 +103,7 @@ public class DateControllerTest {
     // Add similar tests for other controller methods related to TimeZone
 
     @Test
-    public void testGetUsefulData() {
+    void testGetUsefulData() {
         // Arrange
         Long timeZoneId = 1L;
         Long timeEntryId = 1L;
