@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class DateController {
@@ -133,10 +134,13 @@ public class DateController {
     }
 
     @GetMapping("/TimeZoneIdAndTimeEntry")
-
     public ResponseEntity<List<Conversion>> getUsefulData(
             @RequestParam(name = "timeZoneId") Long timeZoneId,
             @RequestParam(name = "timeEntryId") Long timeEntryId) {
+
+        if (timeZoneId == null || timeEntryId == null) {
+            throw new IllegalArgumentException("Invalid timeZoneId or timeEntryId");
+        }
 
         // Вызываем метод сервиса, который выполняет кастомный запрос
         List<Conversion> usefulData = conversionService.getUsefulData(timeZoneId, timeEntryId);
@@ -145,8 +149,9 @@ public class DateController {
         if (usefulData != null && !usefulData.isEmpty()) {
             return ResponseEntity.ok(usefulData);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new RuntimeException("500 error, No data found for timeZoneId=" + timeZoneId + " and timeEntryId=" + timeEntryId);
         }
     }
+
 }
 

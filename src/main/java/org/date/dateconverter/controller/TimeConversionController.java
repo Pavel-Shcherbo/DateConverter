@@ -8,11 +8,14 @@ import org.date.dateconverter.service.CacheService;
 import org.date.dateconverter.service.TimeConversionService;
 import org.date.dateconverter.service.TimeEntryService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.TimeZone;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class TimeConversionController {
     private final TimeConversionService timeConversionService;

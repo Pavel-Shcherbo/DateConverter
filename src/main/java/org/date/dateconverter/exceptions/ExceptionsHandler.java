@@ -52,4 +52,12 @@ public class ExceptionsHandler {
         LOG.error("error, {} code", ex.getStatusCode(), ex);
         return new ErrorResponse(ex.getReason());
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public void handleInternalServerError(Exception ex) {
+        LOG.error("error, 500, Internal Server Error", ex);
+        throw new RuntimeException("Internal Server Error");
+    }
+
 }
