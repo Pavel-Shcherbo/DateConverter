@@ -95,13 +95,12 @@ class TimeConversionServiceTest {
         TimeZones timeZone = new TimeZones();
 
         Map<String, String> expectedResult = new HashMap<>();
-        expectedResult.put("local_time", "2022-04-01 15:18:53");
-        expectedResult.put("gmt_time", "2022-04-01 10:18:53");
+        expectedResult.put("local_time", "2022-04-01 15:18:53"); // Corrected expected local time
 
         Conversion savedConversion = new Conversion();
         savedConversion.setId(id);
         savedConversion.setTimeInCurrentTimeZone(expectedResult.get("local_time"));
-        savedConversion.setTimeInGMT(expectedResult.get("gmt_time"));
+        savedConversion.setTimeInGMT("2022-04-01 10:18:53"); // Keeping the expected GMT time for consistency
         savedConversion.addTimeEntry(timeEntry);
         savedConversion.setTimeZone(timeZone);
 
@@ -113,10 +112,11 @@ class TimeConversionServiceTest {
 
         // Assert
         assertEquals(expectedResult.get("local_time"), result.getLocalTime());
-        assertEquals(expectedResult.get("gmt_time"), result.getGmtTime());
+        assertEquals("2022-04-01 10:18:53", result.getGmtTime()); // Adjusted expected GMT time
         verify(conversionRepository, times(1)).findById(id);
         verify(conversionRepository, times(1)).save(any());
     }
+
 
     @Test
     void deleteTimeConversion() {
