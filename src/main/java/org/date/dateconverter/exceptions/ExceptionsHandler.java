@@ -52,17 +52,4 @@ public class ExceptionsHandler {
         LOG.error("error, {} code", ex.getStatusCode(), ex);
         return new ErrorResponse(ex.getReason());
     }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public void handleInternalServerError(Exception ex) {
-        LOG.error("error, 500, Internal Server Error", ex);
-        throw new DataNotFoundException("500 error, No data found");
-    }
-}
-
-class DataNotFoundException extends RuntimeException {
-    public DataNotFoundException(String message) {
-        super(message);
-    }
 }

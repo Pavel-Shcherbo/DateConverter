@@ -70,7 +70,7 @@ class ExceptionsHandlerTest {
         Exception ex = new RuntimeException("Internal Server Error");
 
         // Act
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> handler.handleInternalServerError(ex));
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> handler.handleInternalServerError((RuntimeException) ex));
 
         // Assert
         assertEquals("Internal Server Error", thrown.getMessage());
