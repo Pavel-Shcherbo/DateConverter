@@ -57,7 +57,12 @@ public class ExceptionsHandler {
     @ExceptionHandler(Exception.class)
     public void handleInternalServerError(Exception ex) {
         LOG.error("error, 500, Internal Server Error", ex);
-        throw new RuntimeException("Internal Server Error");
+        throw new DataNotFoundException("500 error, No data found");
     }
+}
 
+class DataNotFoundException extends RuntimeException {
+    public DataNotFoundException(String message) {
+        super(message);
+    }
 }

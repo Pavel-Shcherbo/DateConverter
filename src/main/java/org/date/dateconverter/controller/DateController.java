@@ -142,16 +142,21 @@ public class DateController {
             throw new IllegalArgumentException("Invalid timeZoneId or timeEntryId");
         }
 
-        // Вызываем метод сервиса, который выполняет кастомный запрос
+        // Call the service method that executes a custom query
         List<Conversion> usefulData = conversionService.getUsefulData(timeZoneId, timeEntryId);
 
-        // Проверяем результат и возвращаем соответствующий ResponseEntity
+        // Check the result and return the appropriate ResponseEntity
         if (usefulData != null && !usefulData.isEmpty()) {
             return ResponseEntity.ok(usefulData);
         } else {
-            throw new RuntimeException("500 error, No data found for timeZoneId=" + timeZoneId + " and timeEntryId=" + timeEntryId);
+            throw new DataNotFoundException("No data found for timeZoneId=" + timeZoneId + " and timeEntryId=" + timeEntryId);
         }
     }
+}
 
+class DataNotFoundException extends RuntimeException {
+    public DataNotFoundException(String message) {
+        super(message);
+    }
 }
 
