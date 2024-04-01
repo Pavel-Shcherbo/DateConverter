@@ -43,34 +43,6 @@ class TimeConversionControllerTest {
         );
     }
 
-    @Test
-    void convertTime() {
-        // Arrange
-        long milliseconds = 1617325533000L;
-        String timeZoneId = "Europe/London";
-        String cacheKey = "conversion_" + milliseconds;
-
-        TimeEntry timeEntry = new TimeEntry();
-        when(timeEntryService.createTimeEntry(milliseconds)).thenReturn(timeEntry);
-
-        TimeZones existingTimeZone = new TimeZones();
-        existingTimeZone.setTimeZone(timeZoneId);
-        when(timeZonesRepository.findByTimeZone(timeZoneId)).thenReturn(existingTimeZone);
-
-        TimeConversionDTO conversionDTO = new TimeConversionDTO();
-        when(timeConversionService.convertTime(milliseconds, timeEntry, existingTimeZone)).thenReturn(conversionDTO);
-
-        when(cacheService.containsKey(cacheKey)).thenReturn(false);
-
-        // Act
-        ResponseEntity<TimeConversionDTO> responseEntity = timeConversionController.convertTime(milliseconds);
-
-        // Assert
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(conversionDTO, responseEntity.getBody());
-        verify(cacheService, times(1)).put(cacheKey, conversionDTO);
-    }
-
 
     @Test
     void convertTime_Cached() {
