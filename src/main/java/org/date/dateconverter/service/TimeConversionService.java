@@ -20,7 +20,6 @@ import java.util.Optional;
 public class TimeConversionService {
 
     private final ConversionRepository conversionRepository;
-    private final TimeEntryService timeEntryService;
 
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final String LOCAL_TIME_KEY = "local_time";
@@ -30,7 +29,6 @@ public class TimeConversionService {
     public TimeConversionService(ConversionRepository conversionRepository,
                                  TimeEntryService timeEntryService) {
         this.conversionRepository = conversionRepository;
-        this.timeEntryService = timeEntryService;
     }
 
     @Transactional
