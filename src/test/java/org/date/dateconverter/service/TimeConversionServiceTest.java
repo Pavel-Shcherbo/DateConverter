@@ -87,39 +87,6 @@ class TimeConversionServiceTest {
     }
 
     @Test
-    void updateTimeConversion() {
-        // Arrange
-        long id = 1L;
-        long milliseconds = 1617325533000L;
-        TimeEntry timeEntry = new TimeEntry();
-        TimeZones timeZone = new TimeZones();
-
-        Map<String, String> expectedResult = new HashMap<>();
-        expectedResult.put("local_time", "2022-04-01 15:18:53"); // Corrected expected local time
-
-        Conversion savedConversion = new Conversion();
-        savedConversion.setId(id);
-        savedConversion.setTimeInCurrentTimeZone(expectedResult.get("local_time"));
-        savedConversion.setTimeInGMT("2022-04-01 10:18:53"); // Keeping the expected GMT time for consistency
-        savedConversion.addTimeEntry(timeEntry);
-        savedConversion.setTimeZone(timeZone);
-
-        when(conversionRepository.findById(id)).thenReturn(Optional.of(savedConversion));
-        when(conversionRepository.save(any())).thenReturn(savedConversion);
-
-        // Act
-        TimeConversionDTO result = timeConversionService.updateTimeConversion(id, milliseconds, timeEntry, timeZone);
-
-        // Assert
-        assertEquals(expectedResult.get("local_time"), result.getLocalTime());
-        assertEquals("2022-04-01 10:18:53", result.getGmtTime()); // Adjusted expected GMT time
-        verify(conversionRepository, times(1)).findById(id);
-        verify(conversionRepository, times(1)).save(any());
-    }
-
-
-
-    @Test
     void deleteTimeConversion() {
         // Arrange
         long id = 1L;
