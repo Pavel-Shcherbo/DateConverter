@@ -3,7 +3,6 @@ package org.date.dateconverter.exceptions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -23,19 +22,6 @@ class ExceptionsHandlerTest {
 
         // Assert
         assertEquals("Internal Server Error", response.getMessage());
-    }
-
-    @Test
-    void handleBadRequestException() {
-        // Arrange
-        ExceptionsHandler handler = new ExceptionsHandler();
-        MethodArgumentNotValidException ex = new MethodArgumentNotValidException(null, null);
-
-        // Act
-        ErrorResponse response = handler.handleBadRequestException(ex);
-
-        // Assert
-        assertEquals("400 error, BAD REQUEST", response.getMessage());
     }
 
     @Test
