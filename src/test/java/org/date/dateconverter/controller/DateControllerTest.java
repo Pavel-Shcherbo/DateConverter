@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -257,5 +258,21 @@ class DateControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(conversions, responseEntity.getBody());
     }
+    @Test
+    void testCreateBulkConversions() {
+        // Arrange
+        List<Conversion> inputConversions = new ArrayList<>();
+        inputConversions.add(new Conversion(/* You can provide necessary data for Conversion object */));
 
+        // Mocking behavior
+        when(conversionService.createConversion(inputConversions.get(0))).thenReturn(inputConversions.get(0));
+
+        // Act
+        ResponseEntity<List<Conversion>> responseEntity = dateController.createBulkConversions(inputConversions);
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals(inputConversions, responseEntity.getBody());
+    }
+    
 }
