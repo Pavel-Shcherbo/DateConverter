@@ -4,6 +4,7 @@ import org.date.dateconverter.models.Conversion;
 import org.date.dateconverter.models.TimeEntry;
 import org.date.dateconverter.models.TimeZones;
 import org.date.dateconverter.service.ConversionService;
+import org.date.dateconverter.service.RequestCounterService;
 import org.date.dateconverter.service.TimeEntryService;
 import org.date.dateconverter.service.TimeZonesService;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,8 @@ class DateControllerTest {
     private TimeEntryService timeEntryService;
     @Mock
     private TimeZonesService timeZonesService;
+    @Mock
+    private RequestCounterService requestCounterService;
 
 
 
@@ -36,7 +39,7 @@ class DateControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        dateController = new DateController(conversionService, timeEntryService, timeZonesService);
+        dateController = new DateController(conversionService, timeEntryService, timeZonesService, requestCounterService);
     }
 
     // Tests for Conversion endpoints

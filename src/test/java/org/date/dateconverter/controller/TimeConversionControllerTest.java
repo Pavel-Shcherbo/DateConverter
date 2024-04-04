@@ -5,6 +5,7 @@ import org.date.dateconverter.models.TimeEntry;
 import org.date.dateconverter.models.TimeZones;
 import org.date.dateconverter.repository.TimeZonesRepository;
 import org.date.dateconverter.service.CacheService;
+import org.date.dateconverter.service.RequestCounterService;
 import org.date.dateconverter.service.TimeConversionService;
 import org.date.dateconverter.service.TimeEntryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +30,10 @@ class TimeConversionControllerTest {
     private TimeZonesRepository timeZonesRepository;
     @Mock
     private CacheService cacheService;
-
+    @Mock
     private TimeConversionController timeConversionController;
+    @Mock
+    private RequestCounterService requestCounterService;
 
     @BeforeEach
     void setUp() {
@@ -39,7 +42,8 @@ class TimeConversionControllerTest {
                 timeConversionService,
                 timeEntryService,
                 timeZonesRepository,
-                cacheService
+                cacheService,
+                requestCounterService
         );
     }
 

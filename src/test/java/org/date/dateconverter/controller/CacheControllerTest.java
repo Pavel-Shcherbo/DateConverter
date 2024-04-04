@@ -7,24 +7,29 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.date.dateconverter.service.RequestCounterService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 class CacheControllerTest {
 
     @Mock
     private CacheService cacheService;
 
+    @Mock
+    private RequestCounterService requestCounterService;
+    @Mock
     private CacheController cacheController;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        cacheController = new CacheController(cacheService);
+        cacheController = new CacheController(cacheService, requestCounterService);
     }
 
     @Test
@@ -41,5 +46,8 @@ class CacheControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(cacheContent, responseEntity.getBody());
+
+        // Verify
+        verify(requestCounterService).incrementAndGet();
     }
 }
